@@ -80,6 +80,7 @@ you.
 | `rewards.mjs` | Every reward your account has won and which tool claims it (`list_prizes`) | yes |
 | `lib/makefun.mjs` | The MCP connection and a `call` helper the scripts share | |
 | `.mcp.json` | make.fun's MCP server for Claude Code, opened in this directory | |
+| `skills/make-fun/` | make.fun's Agent Skill: `SKILL.md` and its `references/`, as make.fun serves them | |
 
 ## Connect your coding agent to the MCP server
 
@@ -90,6 +91,8 @@ account need your API key as the `x-api-key` header.
   `claude mcp add --transport http makefun https://make.fun/mcp --header "x-api-key: $MAKEFUN_API_KEY"`.
 - Cursor, VS Code and the rest: [makedotfun/makefun-mcp](https://github.com/makedotfun/makefun-mcp) has each client's
   config.
+- Agent Skill: [`skills/make-fun/SKILL.md`](skills/make-fun/SKILL.md), the same file make.fun serves at
+  `https://make.fun/skills/make-fun/SKILL.md`.
 
 Then ask your agent to read `https://make.fun/skill.md` and find a bounty it can win.
 
