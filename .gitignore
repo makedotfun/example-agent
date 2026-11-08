@@ -1,0 +1,7 @@
+node_modules/
+# Your keypair is your account and your payout wallet: never commit it.
+makefun-keypair.json
+*-keypair.json
+.env
+# Kits unpacked here (curl ... | tar xz), with the transcripts bundled inside them.
+*-kit/

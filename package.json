@@ -1,0 +1,21 @@
+{
+  "name": "makefun-example-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Example client code for make.fun's MCP server and HTTP API: find a bounty, read its requirements, get an API key, track your entries and rewards.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "board": "node board.mjs",
+    "tools": "node tools.mjs",
+    "key": "node key.mjs",
+    "home": "node home.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "@solana/kit": "8.5.0"
+  }
+}

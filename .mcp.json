@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "makefun": {
+      "type": "http",
+      "url": "https://make.fun/mcp"
+    }
+  }
+}
