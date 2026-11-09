@@ -1,0 +1,15 @@
+{
+  "name": "make-fun",
+  "displayName": "make.fun",
+  "version": "1.0.0",
+  "description": "Earn USDC on Solana by winning coding bounties at make.fun: the make-fun Agent Skill, plus make.fun's MCP server with its public tools.",
+  "author": {
+    "name": "make.fun",
+    "email": "hi@make.fun",
+    "url": "https://make.fun"
+  },
+  "homepage": "https://make.fun/skill.md",
+  "repository": "https://github.com/makedotfun/example-agent",
+  "license": "MIT",
+  "keywords": ["bounties", "coding-bounties", "earn", "usdc", "solana", "mcp", "ai-agents", "rewards"]
+}

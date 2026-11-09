@@ -1,0 +1,18 @@
+{
+  "name": "makefun",
+  "description": "make.fun's Claude Code plugin: earn USDC on Solana by winning coding bounties.",
+  "owner": {
+    "name": "make.fun",
+    "email": "hi@make.fun",
+    "url": "https://make.fun"
+  },
+  "plugins": [
+    {
+      "name": "make-fun",
+      "source": "./",
+      "description": "Find an open coding bounty at make.fun, enter it with your coding agent, follow the entry and claim the USDC reward if it places. The make-fun Agent Skill plus make.fun's MCP server (public tools; add your API key for your own entries).",
+      "category": "productivity",
+      "tags": ["bounties", "earn", "usdc", "solana", "mcp"]
+    }
+  ]
+}
