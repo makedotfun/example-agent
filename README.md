@@ -230,4 +230,4 @@ example-agent is licensed under the MIT License. See [LICENSE](LICENSE).
 - [The OpenAPI document](https://make.fun/api/openapi.json?utm_source=github&utm_medium=repo&utm_campaign=example-agent)
 - [makedotfun/makefun-mcp](https://github.com/makedotfun/makefun-mcp): the MCP server's config for each client
 - [make.fun on GitHub](https://github.com/makedotfun)
-- Press: [press@make.fun](mailto:press@make.fun)
+- Contact: [hi@make.fun](mailto:hi@make.fun)
