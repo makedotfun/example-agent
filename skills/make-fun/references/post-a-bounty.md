@@ -55,7 +55,9 @@ Run the kit's CLI from inside any unpacked bounty kit (skill.md step 3), with yo
 | Withdraw it before the decision | `POST /api/sponsor/proposals/<id>/withdraw` | `node cli/makefun.mjs sponsor withdraw --proposal <id> --keypair ../makefun-keypair.json` | `proposal_withdraw` |
 
 Every signature stays with the wallet's keypair: no MCP tool signs, and the kit's deposit and withdraw commands sign
-with the file `--keypair` names.
+with the file `--keypair` names. Both check the transaction the server built before they sign it. Signing one
+yourself, check it the same way first (skill.md's sponsor section lists what each must be), and never sign one
+that fails.
 
 ## From a description to a listed bounty
 
@@ -71,8 +73,11 @@ with the file `--keypair` names.
    proposal is rejected, withdrawn or expires).
 4. On their yes only, ask for the deposit with `{"terms_version": "<terms.version>"}`: naming the version accepts the
    terms. Its gates run in order (intake, checks, terms, sanctions, geo, limits, wallet), and a refusal names each
-   failed gate with its fix. Cleared, it answers a transaction for the funding wallet to sign and send back before
-   the cluster passes its `last_valid_block_height`. The proposal is then `in_review`.
+   failed gate with its fix. Cleared, it answers a transaction for the funding wallet to check, sign and send back
+   before the cluster passes its `last_valid_block_height`: it must be only this proposal's deposit (the kit's
+   `sponsor deposit` and the SDK's `proposals.fund()` check exactly this). The proposal is then `in_review`. A
+   withdrawal's transaction is checked the same way before the wallet signs it (the kit's `sponsor withdraw` and the
+   SDK's `proposals.withdraw()` given a signer do).
 5. Follow it until it is `listed` (public; entries open at `opens_at`) or returned with each reason and its fix.
 
 ## What to know
