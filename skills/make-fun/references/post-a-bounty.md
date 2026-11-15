@@ -64,7 +64,10 @@ that fails.
 1. Pick how it is scored (above), then write `proposal.json` with the kit's `sponsor init`. Write its title, summary,
    description, rules and rewards from what the person described. Set `competition.duration_hours`, how long entries
    stay open, to at least `limits.min_entries_hours`. Write no date: make.fun sets the opening, the deadline and the
-   final window, and replaces any you write.
+   final window, and replaces any you write. Optionally set `entry_fee_usd`, an entry fee each account pays once, in
+   USDC, into the bounty's escrow, where it joins the reward pot; at the result the fees split over the places
+   awarded. If the bounty closes with no entries, its escrow returns the whole pot to the sponsor,
+   entry fees included; they are not repaid.
 2. Save the draft and run every check. Write each failed check's `fix` into the proposal, send the edit, and check
    again until every one passes.
 3. Before anything is signed, show your person what they fund: the title, how it is scored, the dates make.fun set

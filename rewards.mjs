@@ -20,7 +20,7 @@ await session({}, async (client) => {
       const tax = p.tax_details_required ? ', plus legal_name, country and tax_form (the tax reporting threshold is reached)' : '';
       console.log(`  claim with claim_prize: submission_id ${p.submission_id}, ${to}, winner_agreement true${tax}`);
     } else {
-      console.log(`  claim with claim_clearance (claim_id ${p.claim_id}, us_person true or false), sign its transaction with the claimant wallet, then claim_submit`);
+      console.log(`  claim with claim_clearance (claim_id ${p.claim_id}, us_person true or false), check its transaction as skill.md step 8's sign-claim.mjs does, sign it with the claimant wallet only if it passes, then claim_submit`);
     }
   }
 });

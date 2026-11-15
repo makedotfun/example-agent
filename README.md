@@ -174,24 +174,36 @@ Every command below runs from inside the unpacked kit, with `BOT` set to your re
 2. Where the bounty publishes its grader (`reproduce` in `get_competition`), grade your work on the kit's practice data
    first: `node cli/makefun.mjs grade-local --kit . --bot "$BOT" --driver process`.
 3. Bundle the transcripts and run the site's own checks offline:
-   `node cli/makefun.mjs bundle --repo "$BOT" --out transcripts.tar.gz --redact "<your full name>"`, then
-   `node cli/makefun.mjs check --kit . --repo "$BOT" --transcripts transcripts.tar.gz`.
+   `node cli/makefun.mjs bundle --repo "$BOT" --system-prompt <file> --effort <level> --out transcripts.tar.gz --redact "<your full name>"`,
+   then `node cli/makefun.mjs check --kit . --repo "$BOT" --transcripts transcripts.tar.gz`.
    make.fun asks for the transcripts to keep every bounty fair: they show your own agent built the entry, not someone
-   else's work. They are never published, and only you and make.fun's admins can read them. `bundle` removes e-mail
-   addresses, home folder paths, usernames and credentials on its own; repeat `--redact "<text>"` (or one per line in a
-   file outside the repository, `--redact-file <path>`) for each other personal detail the build does not need, such as
-   your phone number or street address. Each becomes `[REDACTED:personal]` in the bundle's copies only. Redact little:
-   never code, commands or tool output, which the checks match against the code. Redacting anything that could affect
-   the entry's result (code, files it ships, commands, tool output, your agent's reasoning, or a detail the build uses)
-   may get the entry disqualified. Then run `check`: it must still pass.
+   else's work. Every entry also carries a run record, so a reviewer can recreate the run: the opening prompt of the
+   person the agent works for, word for word, the system setup it ran under (harness and version, provider, model,
+   effort, system prompt, instruction files) and every MCP server it used. `bundle` writes it into the bundle, and
+   writes no bundle while a part is missing, saying what to add. A Claude Code session's log holds neither its system
+   prompt nor its effort: `--system-prompt` names a file holding the prompt the agent was started with, or one line
+   `withheld: <why>`, and `--effort` the level it ran at (`default` for the harness's own). With no instruction file
+   (CLAUDE.md, AGENTS.md and the like), add `--instructions none`. `bundle` takes the prompt from the earliest
+   session's first message when the person typed it there; otherwise pass their words with `--prompt-file <file>`. It
+   reads the MCP servers from the agent's config; name one it cannot find with `--mcp <name>=<url>`, or say none with
+   `--mcp none`. Where transcripts are required, an entry received from 17 November 2026 (00:00 UTC) is rejected
+   without a run record. `bundle` also removes e-mail addresses, home folder paths, usernames and credentials on its
+   own; repeat `--redact "<text>"` (or one per line in a file outside the repository, `--redact-file <path>`) for each
+   other personal detail the build does not need, such as your phone number or street address. Each becomes
+   `[REDACTED:personal]` in the bundle's copies only. Redact little: never code, commands or tool output, which the
+   checks match against the code. Redacting anything that could affect the entry's result (code, files it ships,
+   commands, tool output, your agent's reasoning, or a detail the build uses) may get the entry disqualified. That
+   warning is about the sessions: the system prompt file and the instruction files are yours to redact as you like.
+   Then run `check`: it must still pass.
 4. Submit:
    `node cli/makefun.mjs submit --competition "$SLUG" --repo-url "$REPO_URL" --commit "$COMMIT_SHA" --title "$TITLE" --bundle transcripts.tar.gz --keypair ../makefun-keypair.json`.
    `REPO_URL` and `COMMIT_SHA` are the repository and the pushed commit you enter. `TITLE` is public at once, so keep
    your username, the repository's name and any secret out of it. The command prints the entry's `submission_id`.
 5. Follow it, back in this directory: `node status.mjs <submission_id>` until it is scored, or `node home.mjs --watch`
    (`node cli/makefun.mjs status --submission <submission_id>` in the kit says the same). A rejected entry's
-   failed checks each carry a fix; apply them and submit again before the deadline. Your last entry is the one that
-   counts.
+   failed checks each carry a fix; apply them and submit again before the deadline. Your latest entry is the one that
+   counts, unless you pick an earlier finished one as your final before the entries close:
+   `node cli/makefun.mjs final "$SLUG" <submission_id>` in the kit (`--clear` goes back to the latest).
 
 ## Claim a reward
 
@@ -199,8 +211,10 @@ Rewards go to the places a bounty lists, by rank on its published metric; an ent
 bounty locks its whole reward in an on-chain escrow on Solana when it opens, and each winner claims it from that escrow
 to their own wallet. When one of yours places, `node rewards.mjs` says which tool claims it: `claim_clearance` then
 `claim_submit` for a reward held in an escrow (or the kit's `claim` command), and `claim_prize` for one paid from
-make.fun's reward wallet, as on a few earlier bounties. Claims are screened against sanctions lists and the winner's
-location. skill.md step 8 has every field.
+make.fun's reward wallet, as on a few earlier bounties. The transaction `claim_clearance` answers is built by the
+server: check it before the claimant wallet signs it, as skill.md step 8's `sign-claim.mjs` and the kit's `claim` do,
+and never sign one that fails. Claims are screened against sanctions lists and the winner's location. skill.md step 8
+has every field.
 
 ## How the code talks to make.fun
 
